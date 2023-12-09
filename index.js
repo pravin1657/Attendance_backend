@@ -112,8 +112,8 @@ app.get("/users/:id", async (req, res) => {
   let user = {};
   try {
     user = await User.findById(req.params.id);
-    user.pKey=''
-    user.cpKey=''
+    user.pKey = "";
+    user.cpKey = "";
   } catch (err) {
     console.log("error=>", err);
   }
@@ -252,8 +252,8 @@ app.patch("/checkout", async (req, res) => {
   try {
     doc = await Attendance.findOne({
       userId: body.userId,
-      date: body.date
-    }).lean()
+      date: body.date,
+    }).lean();
     console.log("doc", doc);
     if (doc) {
       await Attendance.findByIdAndUpdate(doc._id, body);
@@ -272,9 +272,13 @@ app.post("/getuserattendance", async (req, res) => {
   console.log("body", body);
   let records = {};
   try {
-    records = await Attendance.find({ email: body.userId });
+    records = await Attendance.find({ userId: body.userId });
     console.log("records", records);
-    records && res.send(records);
+    if (records.length > 0) {
+      return res.send(records);
+    } else {
+      return res.send({ error: "no record found" });
+    }
   } catch (err) {
     console.log("error=>", err);
   }
