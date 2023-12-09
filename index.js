@@ -87,6 +87,9 @@ const attendanceSchema = new mongoose.Schema(
     date: {
       type: String,
     },
+    userId: {
+      type: String,
+    },
     checkedIn: {
       type: String,
     },
@@ -248,9 +251,9 @@ app.patch("/checkout", async (req, res) => {
   }
   try {
     doc = await Attendance.findOne({
-      email: body.email,
-      date: body.date,
-    }).lean();
+      userId: body.userId,
+      date: body.date
+    }).lean()
     console.log("doc", doc);
     if (doc) {
       await Attendance.findByIdAndUpdate(doc._id, body);
