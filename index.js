@@ -272,7 +272,7 @@ app.post("/getuserattendance", async (req, res) => {
   console.log("body", body);
   let records = {};
   try {
-    records = await Attendance.find({ email: body.email });
+    records = await Attendance.find({ email: body.userId });
     console.log("records", records);
     records && res.send(records);
   } catch (err) {
