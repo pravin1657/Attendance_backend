@@ -242,6 +242,7 @@ app.post("/checkin", async (req, res) => {
 });
 
 app.patch("/checkout", async (req, res) => {
+  console.log("checkoutapi")
   let body = { ...req.body };
   console.log("body", body);
   if (!body) {
@@ -256,7 +257,8 @@ app.patch("/checkout", async (req, res) => {
     }).lean();
     console.log("doc", doc);
     if (doc) {
-      await Attendance.findByIdAndUpdate(doc._id, body);
+      let abc=await Attendance.findByIdAndUpdate(doc._id, body);
+      console.log("abc",abc)
       return res.json({ status: "Success" });
     } else {
       return res.json({ error: "no record found" });
