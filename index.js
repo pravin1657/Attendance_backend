@@ -286,6 +286,11 @@ app.post("/getuserattendance", async (req, res) => {
   }
 });
 
+app.delete("/attendance/:id", async (req, res) => {
+  await Attendance.findByIdAndDelete(req.params.id);
+  return res.json({ status: "Success" });
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on the port ${port}`);
 });
