@@ -101,6 +101,7 @@ const attendanceSchema = new mongoose.Schema(
     timestamps: true, // automatically created and updated will be added
   }
 );
+
 const Attendance = mongoose.model("attendance", attendanceSchema);
 
 app.get("/users", async (req, res) => {
@@ -179,7 +180,7 @@ app.post("/userauth", async (req, res) => {
   if (doc != null) {
     try {
       const match = await bcrypt.compare(body.pKey, doc.pKey);
-      // console.log("ok=>",match)
+      console.log("ok=>",match)
       if (match) {
         console.log("correct");
         var privateKey = "HIthere222";
@@ -242,7 +243,7 @@ app.post("/checkin", async (req, res) => {
 });
 
 app.patch("/checkout", async (req, res) => {
-  console.log("checkoutapi")
+  console.log("checkoutapi");
   let body = { ...req.body };
   console.log("body", body);
   if (!body) {
@@ -257,8 +258,8 @@ app.patch("/checkout", async (req, res) => {
     }).lean();
     console.log("doc", doc);
     if (doc) {
-      let abc=await Attendance.findByIdAndUpdate(doc._id, body);
-      console.log("abc",abc)
+      let abc = await Attendance.findByIdAndUpdate(doc._id, body);
+      console.log("abc", abc);
       return res.json({ status: "Success" });
     } else {
       return res.json({ error: "no record found" });
